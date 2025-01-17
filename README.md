@@ -1,5 +1,3 @@
-Here’s a README template for your repository, designed to accommodate these two projects while allowing room for future ASP.NET Core projects:  
-
 # ASP.NET Core Projects 🚀  
 
 Welcome to the **ASP.NET Core Projects** repository! This repo is a collection of enterprise-level applications and projects built using the **ASP.NET Core** framework. The goal is to showcase robust, scalable, and production-ready backend solutions while continuously learning and exploring the advanced capabilities of ASP.NET Core.  
