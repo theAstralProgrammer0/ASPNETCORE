@@ -47,8 +47,8 @@ To clone and run any project in this repo:
 
 1. **Clone the Repository:**  
    ```bash  
-   git clone https://github.com/your-username/aspnet-core-projects.git  
-   cd aspnet-core-projects  
+   git clone https://github.com/theAstralProgrammer0/ASPNETCORE.git  
+   cd ASPNETCORE  
    ```  
 
 2. **Navigate to a Project Directory:**  
