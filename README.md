@@ -1,6 +1,5 @@
 Here’s a README template for your repository, designed to accommodate these two projects while allowing room for future ASP.NET Core projects:  
 
-```markdown
 # ASP.NET Core Projects 🚀  
 
 Welcome to the **ASP.NET Core Projects** repository! This repo is a collection of enterprise-level applications and projects built using the **ASP.NET Core** framework. The goal is to showcase robust, scalable, and production-ready backend solutions while continuously learning and exploring the advanced capabilities of ASP.NET Core.  
@@ -100,6 +99,3 @@ If you have questions, suggestions, or feedback, feel free to reach out!
 ---
 
 ### 🌌 Happy Coding!
-```  
-
-This README ensures your repository is future-proof while showcasing your current projects and inviting collaboration. Let me know if you’d like to tailor it further!
