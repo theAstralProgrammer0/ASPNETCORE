@@ -1,0 +1,60 @@
+I learned a lot trying to deploy an asp.net core application.
+I wanted to use the asp.net core SDK 9.0 docker container image to build my asp.net core application.
+Trying to do this made me go through a learning experience with docker.
+I realized you can spin up docker applications in various ways.
+The journey first starts from getting an asp.net core project going, which entails having an asp.net core sdk verion for building it.
+The sdk's image is what I need from docker.
+I pulled the image so i could use it locally. Apparently, directly editing the /var/lib/docker file where image layer information 
+and metadata are stored could corrupt my Docker installation...yikes
+The closest I could get to accessing pulled docker container image was using 'docker image inspect <container_url>'
+and 'docker history <container_url> to view some redundant information.
+Anyways, after pulling the image, I had to use it right?
+Using it took me over a day to figure out how to use it to my satisfaction.
+My goal was to have a way to build my app using the sdk anytime I wanted in a shell environment.
+I also wanted custom configurations for the ports mapping from the container to my host machine, and finally, 
+I wanted persistence for my app's data and filesystem  so I don't loose the work I already did.
+These made me realized soon enough that I needed to either write a DockerFile, 
+or specify the configurations of the sdk container instance in a docker-compose.yml so I didn't have to repeatedly do it.
+The direct way was executing 'docker run -it -v <host_path>:<container_path> -p <host_port>:<container_port>' 
+every single time I wanted to spin up the sdk container for building the app.
+Recall, why I needed the sdk is that it allows me build dotnet apps quickly which is the goal in the first place.
+Plus, I wouldn't ever have to locally install dotnet on my machine, just spin up the sdk and build. Running it is an entirely different story though.
+After realizing the direct way was not sustainable, I figured a docker-compose.yml file can be use to state preset configurations for any image.
+Its kind of like using a vagrant file to specify the properties of the virtual machine you want spun up.
+Hence, I had to install docker-compose locally by getting the binary file for my linux machine's architecture (x86_64)and renaming it.
+In Linux systems, the machine's info can be obtain using 'uname --m' other info can be viewed using 'uname --a'
+Essentially, the docker-compose.yml file is a universally recognised filename in the docker-compose ecosystem, 
+so when I was ready to spin up the container, I just needed to execute 'docker-compose up --build' or simply 'docker-compose up'.
+Apparently, this step is absolutely necessary for me to properly utilize virtual network resources like port mapping from the docker container to my host.
+Now, this is where things get interesting.
+The docker-compose.yml file can have services.
+Different services are denoted using the service keyword and proper indentation (as in yml files). 
+The name of the service comes first as the first key within the service block.
+Then, within that name block, other keys such as 
+image, ports, volumes, environment, working_dir, and command 
+are useful (sometime necessary) fields for specify preset values.
+My docker-compose.yml for the app was:
+```YAML
+services:
+  tutorialapp:
+    image: mcr.microsoft.com/dotnet/sdk:9.0
+    working_dir: /app/aspnetcoreapp
+    ports:
+      - "5070:5070"
+    volumes:
+      - ./:/app
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://0.0.0.0:5070
+    command: dotnet run --urls "http://0.0.0.0:5070"
+```
+
+services - Defines the services the docker-compose.yml can render
+tutorialapp - My chosen name for the sdk image's configuration
+image - Either the name of the container image or the container's url (preferred)
+ports - Used to define the port mapping config. Format is <port_on_host>:<port_on_container>
+volumes - Used to mount some memory on the container to persist the data and filesystem of the project. Format is <path_on_host>:<path_on_container>
+environment - Used to define environment variables for the container.
+command - Used to execute command(s) on the container immediately it is spun up.
+
+
