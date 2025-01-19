@@ -57,4 +57,25 @@ volumes - Used to mount some memory on the container to persist the data and fil
 environment - Used to define environment variables for the container.
 command - Used to execute command(s) on the container immediately it is spun up.
 
+After spinning up the sdk container image, I could then access the filesystem used to build asp.net core web apps.
+To run the web app on a development server, I had to build the app first.
 
+First, execute 'dotnet new webapp --output aspnetcoreapp --no-https' to scaffold out a new webapp 
+with the necessary file-folder structure required to build a webapp.
+
+Next, 'cd aspnetcoreapp' && 'dotnet run --urls "http://0.0.0.0:5070"' to start the app.
+The '--urls "http://0.0.0.0:5070"' option was specified in the command field because ASP.NET Core's default server (Kestrel) has to 
+bind to all network interfaces not just the localhost on docker where its running and listening for inbound or outbound traffic.
+
+Note: A server binding to all network interfaces means that it allows traffic from and to any host that exists in its network 
+(i.e to all available IP addresses on the container).
+In this specific case, the Kestrel server running on the Docker container binds (allows connection from and) to all network interfaces (e.g., localhost).
+
+This configuration of the Kestrel server is specified in the TCP/IP address "http://0.0.0.0:5070" by the IP part "0.0.0.0".
+This IP is a special type of IP address that tells a server to listen for traffic coming from any IP address on the container its being run.
+This includes the container's internal IP address (localhost -> 127.0.0.1) and the Docker bridge network which is any 
+The port part (5070) tells the Kestrel server to listen on port 5070. Docker container running the Kestrel server,
+for receiving and sending traffic over all network interfaces. 
+Kestrel, the development server which runs on the docker container is using docker's bridge network via port 5070 .
+This can also be specified in the "command" field of the <custom_service> fiels of the "services" field of the docker-compose.yml file 
+to fast track the process as in the docker-compose.yml file for the tutorial app I built.
