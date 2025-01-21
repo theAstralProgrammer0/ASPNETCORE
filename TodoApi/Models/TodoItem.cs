@@ -1,5 +1,5 @@
-using System
-using System.ComponentModels.DataAnnotations
+using System;
+using System.ComponentModel.DataAnnotations;
 
 
 namespace TodoApi.Models
