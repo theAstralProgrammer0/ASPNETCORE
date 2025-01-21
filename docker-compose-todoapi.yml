@@ -1,0 +1,17 @@
+version: "3.8"
+
+services:
+  todoapi:
+    image: mcr.microsoft.com/dotnet/sdk:9.0
+    container_name: todoapi
+    working_dir: /app/TodoApi
+    volumes:
+      - ./:/app
+    ports:
+      - "5080:5080"
+    command: >
+      sh -c "until dotnet restore; do
+      echo 'Retrying package restore...';
+      sleep 5;
+      done &&
+      dotnet run --urls http://0.0.0.0:5080"

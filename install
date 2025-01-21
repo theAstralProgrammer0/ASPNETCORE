@@ -1,0 +1,32 @@
+#!/bin/bash
+
+# Check if the TodoApi directory exists
+if [ ! -d "TodoApi" ]; then
+  echo "TodoApi directory not found. Initializing TodoApi..."
+  
+  # Create the TodoApi directory
+  mkdir -p TodoApi
+  
+  # Use Docker to create a new ASP.NET Core Web API project
+  docker run --rm \
+    -v "$(pwd):/app" \
+    -w /app \
+    mcr.microsoft.com/dotnet/sdk:9.0 \
+    dotnet new webapi -o TodoApi
+  
+  echo "TodoApi project initialized successfully."
+else
+  echo "TodoApi directory already exists. Restoring dependencies..."
+  
+  # Restore dependencies for the existing project
+  docker run --rm \
+    -v "$(pwd):/app" \
+    -w /app \
+    mcr.microsoft.com/dotnet/sdk:9.0 \
+    dotnet restore TodoApi/TodoApi.csproj
+fi
+
+echo "Next steps:"
+echo "  1. Edit the files in the ./TodoApi directory as needed."
+echo "  2. Start the API by running:"
+echo "      docker-compose -f docker-compose-todoapi.yml up --build"
