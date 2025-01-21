@@ -12,12 +12,12 @@ namespace TodoApi.Models
     [StringLength(200, ErrorMessage = "Name cannot exceed 200 characters")]
     public string Name { get; set; } = string.Empty;
     public string? Description { get; set; }
-    public PriorityLevel Priority { get; set; }
     public bool IsCompleted { get; set; } = false;
+    public PriorityLevel Priority { get; set; } = PriorityLevel.Medium;
+    public DateTime? CompletedAt { get; set; }
     public DateTime DueDate { get; set; } = DateTime.MaxValue;
-    public DateTime CompletedAt { get; set; }
-    public DateTime CreatedAt { get; }
-    public DateTime UpdatedAt { get; }
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
   }
 
   public enum PriorityLevel
