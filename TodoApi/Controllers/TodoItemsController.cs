@@ -23,5 +23,13 @@ namespace TodoApi.Controllers
     [HttpGet("{id}")]
     public async Task<ActionResult<TodoItem>> GetTodoItem(long id)
     {
-      var todoItem
+      var todoItem = await _context.TodoItems.FindAsync(id);
+
+      if (todoItem == null)
+      {
+        return NotFound();
+      }
+
+      return todoItem;
+    }
 
