@@ -15,13 +15,13 @@ namespace TodoApi.Controllers
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<TodoItem>>> GetTodoItems()
+    public async Task<IActionResult<IEnumerable<TodoItem>>> GetTodoItems()
     {
-      return await _context.TodoItems.ToStringAsync();
+      return await _context.TodoItems.ToListAsync();
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<TodoItem>> GetTodoItem(long id)
+    public async Task<IActionResult<TodoItem>> GetTodoItem(long id)
     {
       var todoItem = await _context.TodoItems.FindAsync(id);
 
@@ -34,7 +34,7 @@ namespace TodoApi.Controllers
     }
 
     [HttpPost]
-    public async Task<ActionResult<TodoItem>> PostTodoItem(TodoItem todoItem)
+    public async Task<IActionResult<TodoItem>> PostTodoItem(TodoItem todoItem)
     {
       _context.TodoItems.Add(todoItem);
       await _context.SaveChangesAsync();
