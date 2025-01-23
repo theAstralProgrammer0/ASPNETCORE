@@ -1,12 +1,49 @@
 services:
-  tutorialapp:
-    image: mcr.microsoft.com/dotnet/sdk:9.0
-    working_dir: /app/aspnetcoreapp
+  sqlserver:
+    image: "mcr.microsoft.com/mssql/server:2022-latest"
+    container_name: sqlserver
     ports:
-      - "5070:5070"
-    volumes:
-      - ./:/app
+      - "1443:1443"
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=http://0.0.0.0:5070
-    command: dotnet run --urls "http://0.0.0.0:5070"
+      SA_PASSWORD: "Akash2412!"
+      ACCEPT_EULA: "Y"
+    volumes:
+      - sql_data:/var/opt/mssql
+    networks:
+      - mynetwork
+    healthcheck:
+      test: ["CMD-SHELL", "sqlcmd -S sqlserver -U sa -P '${SA_PASSWORD}' -Q 'SELECT 1' || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+
+  todoapi:
+    build:
+      context: ./TodoApi
+      dockerfile: Dockerfile
+    ports:
+      - "5080:80"
+    depends_on:
+      - sqlserver
+    command: >
+      sh -c "
+        export PDPASSWORD='${SA_PASSWORD}' && 
+        until sqlcmd -S sqlserver -U sa -P $$PGPASSWORD -Q 'SELECT 1' > /dev/null 2>&1; do
+            echo 'Waiting for SQL Server to become available...';
+            sleep 5;
+        donw &&
+        echo 'SQL Server is up and running!' &&
+        dotnet run --urls http://0.0.0.0:80
+      "
+    environment:
+      - ASPNETCORE_URLS=http://+:80
+      - ConnectionStrings__TodoItemsContext=Server=sqlserver;Database=TodoItems;User Id=sa;Password=Akash2412!;TrustServerCertificate=True;MultipleActiveResultSets=true
+    networks:
+      - mynetwork
+
+volumes:
+  sql_data:
+
+networks:
+  mynetwork:
