@@ -1,6 +1,6 @@
-using Microsoft.AspNetCore.Mvc
-using Microsoft.EntityFrameworkCore
-using TodoApi.Models
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using TodoApi.Models;
 
 namespace TodoApi.Controllers
 {
@@ -58,7 +58,7 @@ namespace TodoApi.Controllers
       }
       catch (DbUpdateConcurrencyException)
       {
-        if !(TodoItemExists(id))
+        if (!TodoItemExists(id))
         {
           return NotFound();
         }
@@ -66,11 +66,6 @@ namespace TodoApi.Controllers
         {
           throw;
         }
-      }
-
-      private bool TodoItemExists(long id)
-      {
-        return _context.TodoItems.Any(e => e.Id == id);
       }
 
       return NoContent();
@@ -90,6 +85,11 @@ namespace TodoApi.Controllers
       await _context.SaveChangesAsync();
 
       return NoContent();
+    }
+
+    private bool TodoItemExists(long id)
+    {
+      return _context.TodoItems.Any(e => e.Id == id);
     }
   }
 }

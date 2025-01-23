@@ -1,5 +1,3 @@
-version: "3.8"
-
 services:
   todoapi:
     image: mcr.microsoft.com/dotnet/sdk:9.0
