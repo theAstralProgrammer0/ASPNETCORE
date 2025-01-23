@@ -8,10 +8,8 @@ services:
     ports:
       - "5080:5080"
     command: >
-      sh -c "dotnet restore &&
-      echo 'Adding Microsoft Entity Framework Package...';
-      dotnet add package Microsoft.EntityFrameworkCore --version 9.0.1 &&
-      echo 'Publishing for smaller image...';
-      dotnet publish -c Release && 
-      echo 'Running the api...';
+      sh -c "until dotnet restore; do
+      echo 'Retrying package restore...';
+      sleep 5;
+      done &&
       dotnet run --urls http://0.0.0.0:5080"
