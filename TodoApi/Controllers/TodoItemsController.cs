@@ -15,13 +15,13 @@ namespace TodoApi.Controllers
     }
 
     [HttpGet]
-    public async Task<IActionResult<IEnumerable<TodoItem>>> GetTodoItems()
+    public async Task<ActionResult<IEnumerable<TodoItem>>> GetTodoItems()
     {
       return await _context.TodoItems.ToListAsync();
     }
 
     [HttpGet("{id}")]
-    public async Task<IActionResult<TodoItem>> GetTodoItem(long id)
+    public async Task<ActionResult<TodoItem>> GetTodoItem(long id)
     {
       var todoItem = await _context.TodoItems.FindAsync(id);
 
@@ -34,7 +34,7 @@ namespace TodoApi.Controllers
     }
 
     [HttpPost]
-    public async Task<IActionResult<TodoItem>> PostTodoItem(TodoItem todoItem)
+    public async Task<ActionResult<TodoItem>> PostTodoItem(TodoItem todoItem)
     {
       _context.TodoItems.Add(todoItem);
       await _context.SaveChangesAsync();
@@ -43,7 +43,7 @@ namespace TodoApi.Controllers
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> PutTodoItem(long id, TodoItem todoItem)
+    public async Task<ActionResult> PutTodoItem(long id, TodoItem todoItem)
     {
       if (id != todoItem.Id)
       {
@@ -72,7 +72,7 @@ namespace TodoApi.Controllers
     }
 
     [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteTodoItem(long id)
+    public async Task<ActionResult> DeleteTodoItem(long id)
     {
       var todoItem = await _context.TodoItems.FindAsync(id);
 
