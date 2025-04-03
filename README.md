@@ -51,21 +51,15 @@ To clone and run any project in this repo:
    cd ASPNETCORE  
    ```  
 
-2. **Navigate to a Project Directory:**  
+2. **Setup the project**  
    ```bash  
-   cd TaskMaster # Or the project you want to explore  
+   ./install  
    ```  
 
-3. **Run the Project:**  
-   - Open the project in your preferred IDE (Visual Studio/VS Code).  
-   - Restore dependencies:  
-     ```bash  
-     dotnet restore  
-     ```  
-   - Run the project:  
-     ```bash  
-     dotnet run  
-     ```  
+3. **Run the docker-compose file**  
+   ```bash  
+   docker-compose -f docker-compose-todoapi.yml up --build
+   ```  
 
 ---
 
@@ -90,9 +84,9 @@ This repository is licensed under the MIT License. See the [LICENSE](LICENSE) fi
 ## 📧 Contact  
 
 If you have questions, suggestions, or feedback, feel free to reach out!  
-- **Email:** your.email@example.com  
-- **GitHub:** [your-username](https://github.com/your-username)  
-- **LinkedIn:** [Your LinkedIn](https://linkedin.com/in/your-linkedin)  
+- **Email:** theastralprogrammer0@outlook.com  
+- **GitHub:** [theAstralProgrammer0](https://github.com/theAstralProgrammer0)  
+- **LinkedIn:** [Temitayo Daisi-Oso](https://linkedin.com/in/tdaisioso)  
 
 ---
 
