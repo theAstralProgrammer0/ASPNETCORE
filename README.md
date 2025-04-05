@@ -15,7 +15,7 @@ Welcome to the **ASP.NET Core Projects** repository! This repo is a collection o
   - Advanced logging and caching.  
   - Database integration with Entity Framework Core (SQLite).  
 - **Deployment:** Hosted on Azure App Service (Free Tier).  
-- **Status:** ✅ Completed.  
+<!-->- **Status:** ✅ Completed.  <-->
 
 ---
 
@@ -28,7 +28,7 @@ Welcome to the **ASP.NET Core Projects** repository! This repo is a collection o
   - API rate limiting and security.  
   - Background tasks using Hangfire.  
 - **Deployment:** Hosted on Render or Heroku (Free Tier).  
-- **Status:** ✅ Completed.  
+<!-->- **Status:** ✅ Completed.  <-->
 
 ---
 
